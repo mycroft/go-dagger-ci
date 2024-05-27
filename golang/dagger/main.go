@@ -19,7 +19,7 @@ import "fmt"
 type Golang struct{}
 
 // Returns a container for testing & build
-func (m *Golang) getContainer(golangVersion string, source *Directory) *Container {
+func (m *Golang) GetContainer(golangVersion string, source *Directory) *Container {
 	return dag.Container().
 		From(fmt.Sprintf("golang:%s-alpine", golangVersion)).
 		WithMountedDirectory("/src", source).
@@ -28,7 +28,7 @@ func (m *Golang) getContainer(golangVersion string, source *Directory) *Containe
 }
 
 // Build static-server
-func (m *Golang) build(source *Directory) *Container {
+func (m *Golang) Build(source *Directory) *Container {
 	return m.getContainer(source).
 		WithExec([]string{"go", "build"})
 }
