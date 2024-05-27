@@ -27,8 +27,12 @@ func (m *Golang) GetContainer(golangVersion string, source *Directory) *Containe
 		WithExec([]string{"apk", "add", "curl"})
 }
 
-// Build static-server
-func (m *Golang) Build(source *Directory) *Container {
-	return m.getContainer(source).
-		WithExec([]string{"go", "build"})
+// Returning a container after running build
+func (m *Golang) Build(golangVersion string, source *Directory) *Container {
+	return m.GetContainer(golangVersion, source).WithExec([]string{"go", "build"})
+}
+
+// Returning a container after running build and test
+func (m *Golang) Test(golangVersion string, source *Directory) *Container {
+	return m.Build(golangVersion, source).WithExec([]string{"go", "test"})
 }
