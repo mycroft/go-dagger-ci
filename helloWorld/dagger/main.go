@@ -14,23 +14,8 @@
 
 package main
 
-import (
-	"context"
-)
-
 type HelloWorld struct{}
 
-// Returns a container that echoes whatever string argument is provided
-func (m *HelloWorld) ContainerEcho(stringArg string) *Container {
-	return dag.Container().From("alpine:latest").WithExec([]string{"echo", stringArg})
-}
-
-// Returns lines that match a pattern in the files of the provided Directory
-func (m *HelloWorld) GrepDir(ctx context.Context, directoryArg *Directory, pattern string) (string, error) {
-	return dag.Container().
-		From("alpine:latest").
-		WithMountedDirectory("/mnt", directoryArg).
-		WithWorkdir("/mnt").
-		WithExec([]string{"grep", "-R", pattern, "."}).
-		Stdout(ctx)
+func (m *HelloWorld) ContainerEchoHelloWorld() *Container {
+	return dag.Container().From("alpine:latest").WithExec([]string{"echo", "hello world"})
 }
